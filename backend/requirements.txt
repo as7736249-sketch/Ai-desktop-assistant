@@ -28,10 +28,15 @@ Pillow>=10.0
 # ─── PDF chat ───
 pypdf>=4.0
 
-# ─── Open apps / play YouTube / Wikipedia ───
+# ─── Wikipedia (cross-platform) ───
 wikipedia>=1.4
-pywhatkit>=5.4
-AppOpener>=1.7
+
+# ─── Desktop automation — WINDOWS ONLY ───
+# pywhatkit + AppOpener depend on pywin32 (Windows-only). The markers below
+# make pip skip them on Linux/macOS (e.g. Vercel, Render, Docker) so the
+# backend still installs & runs there. On Windows they install normally.
+pywhatkit>=5.4; sys_platform == "win32"
+AppOpener>=1.7; sys_platform == "win32"
 
 # ─── Optional: local Ollama provider + vision chat ───
 ollama>=0.3
