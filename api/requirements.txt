@@ -1,0 +1,18 @@
+# Serverless (Vercel) dependencies — installed next to api/index.py.
+# Kept minimal & Linux-safe: Windows-only desktop packages (pywhatkit,
+# AppOpener) and the optional Google-Calendar libs are intentionally omitted
+# here so the function always installs. Those features stay available when
+# running locally on Windows via backend/requirements.txt.
+fastapi>=0.110
+uvicorn[standard]>=0.29
+pydantic>=2.6
+pydantic-settings>=2.2
+python-dotenv>=1.0
+python-multipart>=0.0.9
+requests>=2.31
+colorlog>=6.7
+psutil>=5.9
+Pillow>=10.0
+pypdf>=4.0
+wikipedia>=1.4
+mangum>=0.17

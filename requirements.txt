@@ -1,0 +1,3 @@
+# Root requirements (fallback). Vercel installs from the file next to the
+# entrypoint (api/requirements.txt); this keeps both consistent.
+-r api/requirements.txt

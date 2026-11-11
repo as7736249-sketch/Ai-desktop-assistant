@@ -9,11 +9,11 @@ from collections import Counter
 from datetime import datetime, date
 from threading import Lock
 
-from app.core.config import BACKEND_DIR
+from app.core.config import DATA_DIR
 from app.core.logger import get_logger
 
 log = get_logger(__name__)
-STATS_FILE = BACKEND_DIR / "stats.json"
+STATS_FILE = DATA_DIR / "stats.json"
 
 
 class StatsService:

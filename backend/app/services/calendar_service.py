@@ -14,13 +14,13 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Optional
 
-from app.core.config import settings, BACKEND_DIR
+from app.core.config import settings, BACKEND_DIR, DATA_DIR
 from app.core.logger import get_logger
 
 log = get_logger(__name__)
 
 CRED_FILE = BACKEND_DIR / "credentials.json"
-TOKEN_FILE = BACKEND_DIR / "token.json"
+TOKEN_FILE = DATA_DIR / "token.json"
 SCOPES = ["https://www.googleapis.com/auth/calendar"]
 
 

@@ -1,4 +1,6 @@
 """Central application configuration."""
+import os
+import tempfile
 from functools import lru_cache
 from pathlib import Path
 from typing import Literal
@@ -8,8 +10,44 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 BACKEND_DIR: Path = Path(__file__).resolve().parent.parent.parent
 ENV_FILE: Path = BACKEND_DIR / ".env"
-LOGS_DIR: Path = BACKEND_DIR / "logs"
-UPLOADS_DIR: Path = BACKEND_DIR / "uploads"
+
+# ══════════════════════════════════════════════════════════════════════
+#  Writable data directory
+#  Locally this is `backend/` (exactly as before). On read-only hosts
+#  such as Vercel / serverless we transparently fall back to the OS temp
+#  dir so the app never crashes trying to create folders or write files.
+#  You can also override it explicitly with env var JARVIS_DATA_DIR.
+# ══════════════════════════════════════════════════════════════════════
+def _safe_mkdir(p: Path) -> Path:
+    try:
+        p.mkdir(parents=True, exist_ok=True)
+    except Exception:
+        pass
+    return p
+
+
+def _pick_data_dir() -> Path:
+    candidates: list[Path] = []
+    env = os.environ.get("JARVIS_DATA_DIR")
+    if env:
+        candidates.append(Path(env))
+    candidates.append(BACKEND_DIR)                        # normal local run
+    candidates.append(Path(tempfile.gettempdir()) / "jarvis")  # serverless/read-only
+    for c in candidates:
+        try:
+            c.mkdir(parents=True, exist_ok=True)
+            probe = c / ".write_test"
+            probe.write_text("ok", encoding="utf-8")
+            probe.unlink()
+            return c
+        except Exception:
+            continue
+    return Path(tempfile.gettempdir()) / "jarvis"
+
+
+DATA_DIR: Path = _pick_data_dir()
+LOGS_DIR: Path = DATA_DIR / "logs"
+UPLOADS_DIR: Path = DATA_DIR / "uploads"
 
 
 class Settings(BaseSettings):
@@ -42,14 +80,16 @@ class Settings(BaseSettings):
     AUTO_OPEN_BROWSER: bool = True
 
     @property
+    def data_dir(self) -> Path:
+        return _safe_mkdir(DATA_DIR)
+
+    @property
     def logs_dir(self) -> Path:
-        LOGS_DIR.mkdir(parents=True, exist_ok=True)
-        return LOGS_DIR
+        return _safe_mkdir(LOGS_DIR)
 
     @property
     def uploads_dir(self) -> Path:
-        UPLOADS_DIR.mkdir(parents=True, exist_ok=True)
-        return UPLOADS_DIR
+        return _safe_mkdir(UPLOADS_DIR)
 
     model_config = SettingsConfigDict(
         env_file=ENV_FILE,

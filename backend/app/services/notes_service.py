@@ -7,12 +7,12 @@ from pathlib import Path
 from threading import Lock
 from typing import List, Dict
 
-from app.core.config import BACKEND_DIR
+from app.core.config import DATA_DIR
 from app.core.logger import get_logger
 from app.core.i18n import lang_manager
 
 log = get_logger(__name__)
-STORE = BACKEND_DIR / "notes.json"
+STORE = DATA_DIR / "notes.json"
 
 
 class NotesService:

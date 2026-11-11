@@ -316,3 +316,26 @@ Toggle off "Streaming replies" in sidebar → uses classic mode
 **Made with ❤️ for the AI-assistant community.**
 
 Enjoy Jarvis Pro! 🤖✨
+
+---
+
+## ☁️ Deploying the backend to Vercel (optional)
+
+The repo is Vercel-ready out of the box:
+
+- `api/index.py` — serverless entrypoint (FastAPI + Mangum, normalizes any event)
+- `api/requirements.txt` — Linux-safe deps (Windows-only packages auto-skipped)
+- `vercel.json` — routes every path to the Python function
+- Writable data (logs/uploads/notes/stats) auto-falls back to `/tmp` on read-only hosts
+
+**Steps:**
+1. Push the repo to GitHub (already done).
+2. In Vercel → **New Project → import the repo**.
+3. **Settings → Build & Deployment → Root Directory = the repository root (leave empty — NOT `backend/`).**
+4. Framework preset = **Other**. Deploy.
+
+> ⚠️ Vercel is **serverless** — it can serve the web app + free AI chat, but
+> desktop-only features (open apps, screenshots, local Ollama, pywhatkit) and
+> data persistence won't work there. For the **real desktop assistant**, run
+> `START.bat` on your PC. For a **live demo website**, use GitHub Pages with
+> `demo.html`.
