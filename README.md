@@ -319,23 +319,30 @@ Enjoy Jarvis Pro! 🤖✨
 
 ---
 
-## ☁️ Deploying the backend to Vercel (optional)
+## ☁️ Deploying online (get a live URL)
 
-The repo is Vercel-ready out of the box:
+### ✅ Option 1 — Render (RECOMMENDED, works fully, free)
+Runs the real server (like your PC) — no serverless limits. This repo is ready:
+`Dockerfile`, `.dockerignore`, `render.yaml`, and a `/api/health` health check.
 
-- `api/index.py` — serverless entrypoint (FastAPI + Mangum, normalizes any event)
-- `api/requirements.txt` — Linux-safe deps (Windows-only packages auto-skipped)
-- `vercel.json` — routes every path to the Python function
-- Writable data (logs/uploads/notes/stats) auto-falls back to `/tmp` on read-only hosts
+1. Push the repo to GitHub (done).
+2. Go to https://render.com → **New → Blueprint** → connect this repo → **Apply**.
+   (Or **New → Web Service → Docker**, using the included `Dockerfile`.)
+3. Wait ~3–5 min. You get a URL like `https://jarvis-backend.onrender.com`.
+4. Open it — the full app works (free AI chat, weather, commands, etc.).
 
-**Steps:**
-1. Push the repo to GitHub (already done).
-2. In Vercel → **New Project → import the repo**.
-3. **Settings → Build & Deployment → Root Directory = the repository root (leave empty — NOT `backend/`).**
-4. Framework preset = **Other**. Deploy.
+> Render free tier sleeps after 15 min idle; first hit after sleeping takes ~30s to wake.
 
-> ⚠️ Vercel is **serverless** — it can serve the web app + free AI chat, but
-> desktop-only features (open apps, screenshots, local Ollama, pywhatkit) and
-> data persistence won't work there. For the **real desktop assistant**, run
-> `START.bat` on your PC. For a **live demo website**, use GitHub Pages with
-> `demo.html`.
+### Option 2 — Vercel (static page + API; serverless limits apply)
+If you keep Vercel, the **Root Directory MUST be the repository root (empty — NOT backend/)`**:
+1. Vercel project → **Settings → Build & Deployment → Root Directory** → clear it (repo root) → Save.
+2. Framework Preset = **Other**.
+3. **Redeploy** (Deployments → ⋯ → Redeploy).
+
+`vercel.json` serves the webpage as static files and routes `/api/*` to the Python
+function (`api/index.py`). Note: Vercel is serverless — no persistent storage and
+no desktop features; use Render for the full experience.
+
+### Option 3 — Live demo only (GitHub Pages, instant)
+Repo → **Settings → Pages** → Branch `main` / `/ (root)` → Save → visit
+`https://<user>.github.io/<repo>/demo.html`.

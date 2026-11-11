@@ -1,0 +1,19 @@
+# keep the image small & clean
+.git
+.gitignore
+.venv
+venv
+__pycache__
+*.pyc
+*.log
+demo.html
+_build_demo.py
+BUILD_EXE.bat
+START.bat
+backend/logs
+backend/uploads
+backend/notes.json
+backend/stats.json
+backend/token.json
+backend/credentials.json
+node_modules
