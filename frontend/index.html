@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Jarvis — Voice-controlled AI desktop assistant" />
+  <meta name="theme-color" content="#00e5ff" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <title>Jarvis — AI Desktop Assistant</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+
+  <!-- ═══════════ SPLASH SCREEN ═══════════ -->
+  <div id="splash" class="splash">
+    <div class="splash-inner">
+      <div class="splash-orb"><div class="splash-orb-inner"></div></div>
+      <h1 class="splash-title">JARVIS</h1>
+      <p class="splash-tag">Initializing systems...</p>
+      <div class="splash-bar"><div class="splash-bar-fill"></div></div>
+      <div id="splash-status" class="splash-status">Loading configuration...</div>
+    </div>
+  </div>
+
+  <!-- ═══════════ BACKGROUND PARTICLES ═══════════ -->
+  <div class="bg-particles">
+    <span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span>
+  </div>
+
+  <!-- ═══════════ TOAST CONTAINER ═══════════ -->
+  <div id="toasts" class="toasts"></div>
+
+  <div class="app">
+    <!-- ═══════════ SIDEBAR ═══════════ -->
+    <aside class="sidebar">
+      <div class="logo">
+        <!-- 3D Animated Avatar -->
+        <div class="avatar-3d" id="avatar-3d">
+          <div class="avatar-face">
+            <div class="avatar-eye left"><div class="pupil"></div></div>
+            <div class="avatar-eye right"><div class="pupil"></div></div>
+            <div class="avatar-mouth"></div>
+          </div>
+          <div class="avatar-glow"></div>
+        </div>
+        <h1>JARVIS</h1>
+        <p>v5.1 Pro</p>
+      </div>
+
+      <!-- Language -->
+      <div class="section">
+        <h3>🌐 Language</h3>
+        <div class="lang-row">
+          <button class="lang-btn active" data-lang="en" title="English">🇬🇧 EN</button>
+          <button class="lang-btn" data-lang="hi" title="Hindi">🇮🇳 हिं</button>
+          <button class="lang-btn" data-lang="pa" title="Punjabi">🇮🇳 ਪੰ</button>
+        </div>
+        <label class="switch-row-sm">
+          <span>Auto-detect</span>
+          <label class="switch">
+            <input type="checkbox" id="autodetect-toggle" checked />
+            <span class="slider"></span>
+          </label>
+        </label>
+      </div>
+
+      <!-- Quick commands -->
+      <div class="section">
+        <h3>⚡ Quick Commands</h3>
+        <button class="quick-btn" data-cmd="what time is it">🕐 Time</button>
+        <button class="quick-btn" data-cmd="what's the weather in Ludhiana">🌤️ Weather</button>
+        <button class="quick-btn" data-cmd="latest news">📰 News</button>
+        <button class="quick-btn" data-cmd="draw a sunset over mountains">🎨 Draw</button>
+        <button class="quick-btn" data-cmd="search for latest AI news">🔍 Search</button>
+        <button class="quick-btn" data-cmd="tell me a joke">😂 Joke</button>
+      </div>
+
+      <!-- Personality -->
+      <div class="section">
+        <h3>🎭 Personality</h3>
+        <select id="personality-select" class="select-box" aria-label="Choose personality">
+          <option value="jarvis">🤵 Jarvis</option>
+          <option value="friendly">😊 Friendly</option>
+          <option value="professional">💼 Professional</option>
+          <option value="sassy">😏 Sassy</option>
+          <option value="teacher">👨‍🏫 Teacher</option>
+          <option value="gen_z">✨ Gen Z</option>
+        </select>
+      </div>
+
+      <!-- Theme -->
+      <div class="section">
+        <h3>🎨 Theme</h3>
+        <div class="theme-grid">
+          <button class="theme-btn active" data-theme="dark" title="Dark"><div class="theme-preview dark-preview"></div><span>Dark</span></button>
+          <button class="theme-btn" data-theme="light" title="Light"><div class="theme-preview light-preview"></div><span>Light</span></button>
+          <button class="theme-btn" data-theme="cyberpunk" title="Cyberpunk"><div class="theme-preview cyberpunk-preview"></div><span>Cyber</span></button>
+          <button class="theme-btn" data-theme="ocean" title="Ocean"><div class="theme-preview ocean-preview"></div><span>Ocean</span></button>
+          <button class="theme-btn" data-theme="sunset" title="Sunset"><div class="theme-preview sunset-preview"></div><span>Sunset</span></button>
+          <button class="theme-btn" data-theme="forest" title="Forest"><div class="theme-preview forest-preview"></div><span>Forest</span></button>
+        </div>
+      </div>
+
+      <!-- Wake word -->
+      <div class="section wake-section">
+        <label class="switch-row">
+          <span>🎙️ Wake "Hey Jarvis"</span>
+          <label class="switch">
+            <input type="checkbox" id="wake-toggle" />
+            <span class="slider"></span>
+          </label>
+        </label>
+      </div>
+
+      <!-- Streaming toggle -->
+      <div class="section">
+        <label class="switch-row">
+          <span>⚡ Streaming replies</span>
+          <label class="switch">
+            <input type="checkbox" id="stream-toggle" checked />
+            <span class="slider"></span>
+          </label>
+        </label>
+      </div>
+
+      <!-- Footer -->
+      <div class="sidebar-footer">
+        <button id="settings-btn" class="ghost-btn settings-btn">⚙️ AI Settings</button>
+        <button id="imagegen-btn" class="ghost-btn">🎨 Generate Image</button>
+        <button id="pdf-btn"    class="ghost-btn">📄 PDF Chat</button>
+        <button id="image-btn"  class="ghost-btn">🖼️ Vision Chat</button>
+        <button id="email-btn"  class="ghost-btn">📧 Email / WhatsApp</button>
+        <button id="notes-btn"  class="ghost-btn">📋 My Notes</button>
+        <button id="stats-btn"  class="ghost-btn">📊 Stats</button>
+        <button id="export-btn" class="ghost-btn">📤 Export Chat</button>
+        <button id="clear-btn"  class="ghost-btn">🗑️ Clear Chat</button>
+        <div class="status">
+          <span class="status-dot"></span>
+          <span id="status-text">Ready</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ═══════════ MAIN ═══════════ -->
+    <main class="main">
+      <!-- Backend offline / reconnecting banner -->
+      <div id="backend-banner" class="backend-banner hidden">
+        <span id="backend-banner-text">⚠️ Backend is offline.</span>
+        <button id="backend-retry" class="backend-retry">Retry now</button>
+      </div>
+
+      <header class="header">
+        <div>
+          <h2 id="greeting">Hello, <span class="user-name">Boss</span> 👋</h2>
+          <p id="header-hint">Click the mic 🎤 or say "Hey Jarvis"</p>
+        </div>
+        <div class="shortcut-hint">
+          <button id="palette-btn" class="palette-btn" title="Command palette (Ctrl+K)">
+            <kbd>Ctrl</kbd>+<kbd>K</kbd> Commands
+          </button>
+        </div>
+      </header>
+
+      <!-- Active context banners -->
+      <div id="pdf-banner" class="context-banner pdf-banner hidden">
+        <span>📄 Chatting with PDF: <b id="pdf-banner-name"></b></span>
+        <button id="pdf-banner-close" aria-label="Close">✖</button>
+      </div>
+      <div id="image-banner" class="context-banner image-banner hidden">
+        <span>🖼️ Chatting with Image: <b id="image-banner-name"></b></span>
+        <button id="image-banner-close" aria-label="Close">✖</button>
+      </div>
+
+      <!-- Chat -->
+      <div class="chat" id="chat" role="log" aria-live="polite">
+        <div class="message assistant">
+          <div class="avatar">🤖</div>
+          <div class="bubble">
+            Hi! I'm Jarvis. Try voice, text, or press <kbd>Ctrl</kbd>+<kbd>K</kbd> for the command palette.
+            <div class="timestamp">now</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Visualizer -->
+      <div class="visualizer-wrap">
+        <canvas id="visualizer" width="600" height="70" aria-hidden="true"></canvas>
+      </div>
+
+      <!-- Input -->
+      <div class="input-area">
+        <button id="mic-btn" class="mic-btn" title="Click to speak (Ctrl+/)" aria-label="Microphone">
+          <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor">
+            <path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21h2v-3.08A7 7 0 0 0 19 11h-2z"/>
+          </svg>
+          <span class="pulse-ring"></span>
+        </button>
+        <input type="text" id="text-input" placeholder="Type a message or click the mic..." autocomplete="off" aria-label="Message input" />
+        <button id="send-btn" class="send-btn" title="Send" aria-label="Send">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+            <path d="M2 21l21-9L2 3v7l15 2-15 2z"/>
+          </svg>
+        </button>
+      </div>
+    </main>
+  </div>
+
+  <!-- ═══════════ COMMAND PALETTE ═══════════ -->
+  <div id="palette" class="palette hidden">
+    <div class="palette-box">
+      <input type="text" id="palette-input" placeholder="Type a command or search..." autocomplete="off" />
+      <ul id="palette-list" class="palette-list"></ul>
+      <div class="palette-footer">
+        <span><kbd>↑↓</kbd> navigate</span>
+        <span><kbd>↵</kbd> run</span>
+        <span><kbd>Esc</kbd> close</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════ NOTES MODAL ═══════════ -->
+  <div id="notes-modal" class="modal hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>📋 My Notes</h3>
+        <button class="close-btn" data-close="notes-modal" aria-label="Close">✖</button>
+      </div>
+      <div class="add-note-row">
+        <input type="text" id="new-note-input" placeholder="Add a new note..." />
+        <button id="add-note-btn">➕ Add</button>
+      </div>
+      <ul id="notes-list" class="notes-list"></ul>
+    </div>
+  </div>
+
+  <!-- ═══════════ PDF MODAL ═══════════ -->
+  <div id="pdf-modal" class="modal hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>📄 Chat with PDF</h3>
+        <button class="close-btn" data-close="pdf-modal" aria-label="Close">✖</button>
+      </div>
+      <p class="modal-hint">Upload a PDF, then ask questions like "summarize the pdf".</p>
+      <label class="upload-box" for="pdf-upload">
+        <div class="upload-icon">📤</div>
+        <div><b>Click or drop a PDF here</b></div>
+        <div class="upload-hint">Max 25 MB · Text-based PDFs only</div>
+        <input type="file" id="pdf-upload" accept=".pdf" hidden />
+      </label>
+      <div id="pdf-upload-progress" class="hidden">
+        <div class="progress-bar"><div class="progress-fill"></div></div>
+        <div class="progress-text">Uploading...</div>
+      </div>
+      <h4 class="pdf-list-title">Your PDFs</h4>
+      <ul id="pdf-list" class="notes-list"></ul>
+    </div>
+  </div>
+
+  <!-- ═══════════ IMAGE MODAL ═══════════ -->
+  <div id="image-modal" class="modal hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>🖼️ Chat with Image</h3>
+        <button class="close-btn" data-close="image-modal" aria-label="Close">✖</button>
+      </div>
+      <p class="modal-hint">Needs a vision model. Run: <code>ollama pull llava</code></p>
+      <label class="upload-box" for="image-upload">
+        <div class="upload-icon">🖼️</div>
+        <div><b>Click or drop an image here</b></div>
+        <div class="upload-hint">PNG · JPG · WEBP · Max 25 MB</div>
+        <input type="file" id="image-upload" accept="image/*" hidden />
+      </label>
+      <div id="image-upload-progress" class="hidden">
+        <div class="progress-bar"><div class="progress-fill"></div></div>
+        <div class="progress-text">Uploading...</div>
+      </div>
+      <h4 class="pdf-list-title">Your Images</h4>
+      <ul id="image-list" class="notes-list"></ul>
+    </div>
+  </div>
+
+  <!-- ═══════════ STATS MODAL ═══════════ -->
+  <div id="stats-modal" class="modal hidden">
+    <div class="modal-content stats-content">
+      <div class="modal-header">
+        <h3>📊 Usage Stats</h3>
+        <button class="close-btn" data-close="stats-modal" aria-label="Close">✖</button>
+      </div>
+      <div class="stat-tiles">
+        <div class="stat-tile"><div class="stat-num" id="stat-total">-</div><div class="stat-label">Total commands</div></div>
+        <div class="stat-tile"><div class="stat-num" id="stat-llm">-</div><div class="stat-label">AI chats</div></div>
+        <div class="stat-tile"><div class="stat-num" id="stat-types">-</div><div class="stat-label">Command types</div></div>
+      </div>
+      <h4 class="stat-section-title">Top commands</h4>
+      <ul id="stat-top" class="top-list"></ul>
+      <h4 class="stat-section-title">Activity (last 14 days)</h4>
+      <div id="stat-chart" class="stat-chart"></div>
+      <button id="stats-reset" class="ghost-btn" style="margin-top:14px;">🔄 Reset stats</button>
+    </div>
+  </div>
+
+  <!-- ═══════════ IMAGE GENERATION MODAL ═══════════ -->
+  <div id="imagegen-modal" class="modal hidden">
+    <div class="modal-content stats-content">
+      <div class="modal-header">
+        <h3>🎨 Generate Image (AI)</h3>
+        <button class="close-btn" data-close="imagegen-modal" aria-label="Close">✖</button>
+      </div>
+      <p class="modal-hint">Free image generation via Pollinations.ai. No API key needed.</p>
+      <div class="imagegen-input-row">
+        <input type="text" id="imagegen-prompt" placeholder="e.g. sunset over mountains, cyberpunk city..." />
+        <button id="imagegen-go" class="primary-btn">✨ Generate</button>
+      </div>
+      <div id="imagegen-progress" class="hidden">
+        <div class="progress-bar"><div class="progress-fill"></div></div>
+        <div class="progress-text">Generating (10-30 sec)...</div>
+      </div>
+      <div id="imagegen-preview" class="imagegen-preview"></div>
+      <h4 class="stat-section-title">Recent Generations</h4>
+      <div id="imagegen-recent" class="imagegen-grid"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════ EMAIL / WHATSAPP MODAL ═══════════ -->
+  <div id="email-modal" class="modal hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>📧 Send Email or WhatsApp</h3>
+        <button class="close-btn" data-close="email-modal" aria-label="Close">✖</button>
+      </div>
+      <div class="tab-row">
+        <button class="tab-btn active" data-tab="email-tab">📧 Email</button>
+        <button class="tab-btn" data-tab="wa-tab">💬 WhatsApp</button>
+      </div>
+
+      <div id="email-tab" class="tab-content">
+        <label class="field-label">To:</label>
+        <input type="email" id="em-to" placeholder="recipient@example.com" />
+        <label class="field-label">Subject:</label>
+        <input type="text" id="em-subject" placeholder="Meeting tomorrow" />
+        <label class="field-label">Message:</label>
+        <textarea id="em-body" placeholder="Hi, ..." rows="4"></textarea>
+        <button id="em-send" class="primary-btn">📧 Open in Gmail</button>
+        <p class="modal-hint" style="margin-top:8px;">Opens Gmail compose window with everything filled in. Just hit Send.</p>
+      </div>
+
+      <div id="wa-tab" class="tab-content hidden">
+        <label class="field-label">Phone (with country code):</label>
+        <input type="tel" id="wa-phone" placeholder="+91 98765 43210" />
+        <label class="field-label">Message:</label>
+        <textarea id="wa-message" placeholder="Hey, what's up?" rows="4"></textarea>
+        <button id="wa-send" class="primary-btn">💬 Open WhatsApp Web</button>
+        <p class="modal-hint" style="margin-top:8px;">Opens WhatsApp Web with message ready. Just hit Send.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════ AI SETTINGS MODAL ═══════════ -->
+  <div id="settings-modal" class="modal hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>⚙️ AI Settings</h3>
+        <button class="close-btn" data-close="settings-modal" aria-label="Close">✖</button>
+      </div>
+
+      <div id="settings-status" class="settings-status">
+        <span class="status-dot"></span>
+        <span id="settings-status-text">Checking AI brain…</span>
+      </div>
+
+      <label class="field-label">AI Provider:</label>
+      <select id="settings-provider" class="select-box">
+        <option value="auto">🤖 Auto (recommended)</option>
+        <option value="pollinations">🆓 Pollinations — free, no key</option>
+        <option value="groq">⚡ Groq — free key (fast)</option>
+        <option value="gemini">✨ Google Gemini — free key</option>
+        <option value="openrouter">🔀 OpenRouter — free key</option>
+        <option value="openai">💳 OpenAI — paid key</option>
+        <option value="ollama">💻 Ollama — local, offline</option>
+      </select>
+
+      <label class="field-label">API Key <span class="muted">(leave blank for free providers)</span>:</label>
+      <input type="password" id="settings-key" placeholder="Paste your key here (optional)…" autocomplete="off" />
+
+      <label class="field-label">Model <span class="muted">(optional — blank = provider default)</span>:</label>
+      <input type="text" id="settings-model" placeholder="e.g. llama-3.3-70b-versatile" autocomplete="off" />
+
+      <div class="settings-actions">
+        <button id="settings-save" class="primary-btn">💾 Save &amp; Connect</button>
+        <button id="settings-test" class="ghost-btn">🧪 Test</button>
+      </div>
+
+      <p class="modal-hint" style="margin-top:10px;">
+        <b>No key needed:</b> leave it blank and Jarvis uses a free AI instantly
+        (free tier is limited to ~1 reply every 45s).
+        For <b>fast, unlimited replies</b> — still 100% free — get a
+        <b>Groq key</b> at <code>console.groq.com</code> (takes ~2 min, no card),
+        choose <b>Groq</b> above, paste the key, and hit <b>Save</b>.
+        Gemini &amp; OpenRouter free keys also work.
+      </p>
+    </div>
+  </div>
+
+  <script src="/js/app.js"></script>
+</body>
+</html>

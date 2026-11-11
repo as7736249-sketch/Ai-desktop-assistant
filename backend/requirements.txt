@@ -1,0 +1,46 @@
+# ═══════════════════════════════════════════════════════
+# Jarvis AI Desktop Assistant v5.1 PRO
+# Works on Python 3.10 – 3.13 on Windows
+# (version pins relaxed to ">=" so pip always finds a
+#  matching wheel and installs never fail on newer Python)
+# ═══════════════════════════════════════════════════════
+
+# ─── Web server (REQUIRED) ───
+fastapi>=0.110
+uvicorn[standard]>=0.29
+pydantic>=2.6
+pydantic-settings>=2.2
+python-dotenv>=1.0
+python-multipart>=0.0.9
+
+# ─── HTTP client (REQUIRED) ───
+requests>=2.31
+
+# ─── Logging (REQUIRED) ───
+colorlog>=6.7
+
+# ─── System info: battery, CPU, memory, disk ───
+psutil>=5.9
+
+# ─── Screenshot ───
+Pillow>=10.0
+
+# ─── PDF chat ───
+pypdf>=4.0
+
+# ─── Open apps / play YouTube / Wikipedia ───
+wikipedia>=1.4
+pywhatkit>=5.4
+AppOpener>=1.7
+
+# ─── Optional: local Ollama provider + vision chat ───
+ollama>=0.3
+
+# ─── Optional: Google Calendar (leave installed; feature auto-disables
+#     itself if you don't add credentials.json) ───
+google-api-python-client>=2.100
+google-auth-httplib2>=0.2
+google-auth-oauthlib>=1.2
+
+# NOTE: For building the .exe, additionally run:
+#   pip install pyinstaller

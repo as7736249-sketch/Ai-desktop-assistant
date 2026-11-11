@@ -1,0 +1,37 @@
+# ─── Python ───
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+
+# ─── Virtual environments ───
+.venv/
+venv/
+env/
+
+# ─── Secrets (Google Calendar) ───
+.env
+credentials.json
+token.json
+
+# ─── Auto-generated user data ───
+backend/notes.json
+backend/uploads/*.pdf
+backend/stats.json
+backend/uploads/generated/
+backend/logs/*.log
+backend/logs/*.log.*
+!backend/logs/.gitkeep
+!backend/uploads/.gitkeep
+
+# ─── IDE ───
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# ─── PyInstaller build artifacts ───
+build/
+dist/
+*.spec
